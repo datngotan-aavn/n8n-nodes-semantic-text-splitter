@@ -11,6 +11,39 @@ import { SemanticTextSplitter as SemanticTextSplitterClass } from './SemanticTex
 import { Embeddings } from '@langchain/core/embeddings';
 import { getConnectionHintNoticeField } from '@n8n/n8n-nodes-langchain/dist/utils/sharedFields';
 
+const DEFAULT_DELIMITERS = ['.', '!', '?'];
+
+function decodeEscapedDelimiter(value: string): string {
+	return value
+		.replace(/\\n/g, '\n')
+		.replace(/\\r/g, '\r')
+		.replace(/\\t/g, '\t')
+		.replace(/\\\\/g, '\\');
+}
+
+function parseDelimiters(rawDelimiters: string): string[] {
+	const value = rawDelimiters.trim();
+
+	if (!value) {
+		return DEFAULT_DELIMITERS;
+	}
+
+	if (value.includes(',')) {
+		const delimiters = value
+			.split(',')
+			.map((delimiter) => decodeEscapedDelimiter(delimiter.trim()))
+			.filter((delimiter) => delimiter.length > 0);
+
+		return delimiters.length > 0 ? delimiters : DEFAULT_DELIMITERS;
+	}
+
+	if (/^\\[nrt\\]$/.test(value)) {
+		return [decodeEscapedDelimiter(value)];
+	}
+
+	return [...value];
+}
+
 export class SemanticTextSplitter implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Semantic Text Splitter',
@@ -76,7 +109,7 @@ export class SemanticTextSplitter implements INodeType {
 				displayName: 'Sentence Delimiters',
 				name: 'delimiters',
 				type: 'string',
-				default: '.!?',
+				default: '.,!,?',
 				required: true,
 			},
 		],
@@ -87,7 +120,7 @@ export class SemanticTextSplitter implements INodeType {
 
 		const splitter = new SemanticTextSplitterClass({
 			breakpointThreshold: this.getNodeParameter('breakpointThreshold', itemIndex) as number,
-			delimiters: [...(this.getNodeParameter('delimiters', itemIndex) as string)],
+			delimiters: parseDelimiters(this.getNodeParameter('delimiters', itemIndex) as string),
 			embeddings: (await this.getInputConnectionData(
 				NodeConnectionType.AiEmbedding,
 				0,

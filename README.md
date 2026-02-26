@@ -18,6 +18,7 @@ Semantic text splitting is an advanced text processing technique that splits tex
 Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
 **Quick Installation:**
+
 - Make sure to allow community nodes with `N8N_COMMUNITY_PACKAGES_ENABLED=true`
 - Once logged in to your N8N web UI, go to `/settings/community-nodes` and type `@bitovi/n8n-nodes-semantic-text-splitter`
 
@@ -46,7 +47,7 @@ The Semantic Text Splitter node requires an embedding model connection and suppo
 - **Percentile Threshold for Breakpoints** (default: 0.95): Controls how selective the algorithm is when identifying breakpoints. Higher values result in fewer, larger chunks.
 - **Number of Sentences to Consider in Sliding Window** (default: 3): The size of the sliding window used for embedding comparison.
 - **Minimum Chunk Size** (default: 100): Minimum character length for generated chunks.
-- **Sentence Delimiters** (default: ".!?"): Characters used to identify sentence boundaries.
+- **Sentence Delimiters** (default: `.,!,?`): Comma-separated list of delimiters used to identify sentence boundaries (for example `.,!,?,\\n`).
 
 ### How It Works
 
@@ -68,9 +69,9 @@ This approach creates more coherent chunks compared to simple character or token
 
 ## Resources
 
-* [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
-* [5 Levels Of Text Splitting Tutorial](https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/tutorials/LevelsOfTextSplitting/5_Levels_Of_Text_Splitting.ipynb)
-* [LangChain Text Splitters Documentation](https://js.langchain.com/docs/modules/data_connection/document_transformers/)
+- [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
+- [5 Levels Of Text Splitting Tutorial](https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/tutorials/LevelsOfTextSplitting/5_Levels_Of_Text_Splitting.ipynb)
+- [LangChain Text Splitters Documentation](https://js.langchain.com/docs/modules/data_connection/document_transformers/)
 
 ## Version history
 

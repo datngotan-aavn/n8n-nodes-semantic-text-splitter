@@ -1,6 +1,6 @@
 {
   "name": "@dat.ngotan2k/n8n-nodes-semantic-text-splitter",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "N8N node for semantic text splitting",
   "keywords": [
     "n8n-community-node-package"

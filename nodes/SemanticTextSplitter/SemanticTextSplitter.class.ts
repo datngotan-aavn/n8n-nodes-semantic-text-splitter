@@ -52,15 +52,23 @@ export class SemanticTextSplitter extends TextSplitter implements SemanticTextSp
 	}
 
 	_splitIntoSentences(text: string): string[] {
-		// Escape special regex characters and join with |
 		const escapedDelimiters = this.delimiters
+			.filter((delimiter) => delimiter.length > 0)
 			.map((delimiter) => delimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-			.join('');
+			.sort((a, b) => b.length - a.length)
+			.join('|');
 
-		// Create regex pattern using the delimiters
-		const pattern = new RegExp(`[^${escapedDelimiters}]+[${escapedDelimiters}]+`, 'g');
+		if (!escapedDelimiters) {
+			return [text];
+		}
 
-		return text.match(pattern) || [text];
+		const pattern = new RegExp(`([\\s\\S]*?(?:${escapedDelimiters}|$))`, 'g');
+		const matches = text
+			.match(pattern)
+			?.map((segment) => segment.trim())
+			.filter((segment) => segment.length > 0);
+
+		return matches && matches.length > 0 ? matches : [text];
 	}
 
 	_createSlidingWindows(sentences: string[]): string[] {

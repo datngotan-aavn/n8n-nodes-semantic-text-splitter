@@ -1,4 +1,4 @@
-# @bitovi/n8n-nodes-semantic-text-splitter
+# @datngotan/n8n-nodes-semantic-text-splitter
 
 This is an n8n community node. It lets you use semantic text splitting in your n8n workflows.
 

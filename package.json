@@ -1,6 +1,6 @@
 {
-  "name": "@dat.ngotan2k/n8n-nodes-semantic-text-splitter",
-  "version": "0.1.4",
+  "name": "@datngotan/n8n-nodes-semantic-text-splitter",
+  "version": "0.2.0",
   "description": "N8N node for semantic text splitting",
   "keywords": [
     "n8n-community-node-package"
@@ -8,8 +8,8 @@
   "license": "MIT",
   "homepage": "",
   "author": {
-    "name": "Roye",
-    "email": "roye@bitovi.com"
+    "name": "datngo",
+    "email": "datngotan2000@gmail.com"
   },
   "repository": {
     "type": "git",

@@ -41,7 +41,11 @@ function parseDelimiters(rawDelimiters: string): string[] {
 		return [decodeEscapedDelimiter(value)];
 	}
 
-	return [...value];
+	if (/^[^\w\s]+$/.test(value) && value.length > 1) {
+		return [...value];
+	}
+
+	return [decodeEscapedDelimiter(value)];
 }
 
 export class SemanticTextSplitter implements INodeType {
